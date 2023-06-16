@@ -1,11 +1,22 @@
+/** 
+ * エントリーポイント。アプリ全体に共通する処理を記載します。
+ * @author Enomoto kazuki
+ */
+const PORT = 3000;
 const express = require("express");
 const app = express();
-const ejs = require("ejs");
+const loginRouter = require("./routes/loginRouter.js");
 
-let loginRouter = require("./routes/loginRouter.js");
+//静的ファイルの使用
+app.use(express.static(__dirname+"/public"));
 
-app.use("view engine","ejs");
-app.use("/login",loginRouter);
+//テンプレートエンジンの指定
+app.set("view engine","ejs");
+
+//ルーティング
+app.use(loginRouter);
 
 //listen開始
-app.listen(3000);
+app.listen(PORT,()=>{
+  console.log("server start");
+});

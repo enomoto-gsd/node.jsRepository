@@ -1,0 +1,14 @@
+/*ログイン画面のCSS*/
+
+/**タイトル部分のCSS*/
+.login_title{
+  text-align: center;
+}
+
+/*formエリア部分のCSS*/
+.form_area{
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
