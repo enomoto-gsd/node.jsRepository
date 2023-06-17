@@ -9,6 +9,15 @@
 .form_area{
   margin: 0 auto;
   text-align: center;
-  display: flex;
-  flex-direction: column;
 }
+
+.flash-message-area{
+  display:none;
+}
+
+.signup_link{
+  position: absolute;
+  top: 250px;
+  right:300px;
+}
+
