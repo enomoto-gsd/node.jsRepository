@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ログイン</title>
+  <!--boot strapの読み込み -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <!--　ログイン画面のCSS-->
+  <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+  <main>
+    <h1><%= title%> </h1>
+    <section class = "form_area">
+    <form action = "/login" method = "post">
+    <table>
+      <tr>
+        <div class = "form-group">
+          <th><label for = "mail_addres">メールアドレス</label></th>
+          <td><input type = "text" id = "mail_addres" class = "form-control"></td>
+        </div>
+      </tr>
+      <tr>
+        <div class = "form-group">
+          <th><label for = "password">パスワード</label></th>
+          <td><input type = "password" id = "password" class = "form-control"></td>
+        </div>
+      </tr>
+    </table>
+    <div class = "form-group">
+      <input type = "submit" value = "ログイン" class = "btn btn-primary">
+    </div>
+    </form>
+    </section>
+  </main>
+   <!--jqueryの読み込み -->
+   <script src="./javascript/jquery.min.js"></script>
+   <!--bootstrap jsの読み込み -->
+   <script src="./javascript/bootstrap.min.js"></script>
+</body>
+</html>
