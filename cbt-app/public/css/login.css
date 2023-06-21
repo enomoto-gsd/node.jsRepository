@@ -15,10 +15,12 @@ body{
   text-align: center;
 }
 
+/**フラッシュメッセージエリアのCSS*/
 .flash-message-area{
   display:none;
 }
 
+/**ユーザー登録画面リンクの位置指定CSS*/
 .signup_link{
   position: absolute;
   top: 250px;
