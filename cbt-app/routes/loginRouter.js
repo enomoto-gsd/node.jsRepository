@@ -23,7 +23,6 @@ router.post("/login", (req, res) => {
     db.collection("users").findOne({
       mail_address: mail_address
     }, (err, userData) => {
-
       if (err) {
         //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
         res.render("./login.ejs");
@@ -33,10 +32,9 @@ router.post("/login", (req, res) => {
 
       if (userData !== null && password === userData.password) {
         req.session.login = userData.user_name;
-        console.log(req.session.login);
         res.render("./column_list.ejs",{loginUser: req.session.login});
       } else {
-        req.flash('err', '入力内容に一致したないようがありません。');
+        req.flash('noUserInfo','ユーザーIDまたはパスワードが不正です。')
         res.redirect('/login');
       }
       client.close();

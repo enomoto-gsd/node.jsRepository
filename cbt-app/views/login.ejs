@@ -14,9 +14,11 @@
   <div class="container">
     <h1 class="login_title">ログイン</h1>
     <div class="form_area mt-5">
-      <div class="flash-message-area">
-        <p>flashメッセージエリアです。</p>
-      </div>
+     <% if(locals.message){ %>
+       <div class="alert alert-danger" role="alert">
+          <%= message.noUserInfo[0] %>
+       </div>
+     <%}%>
       <form action="/login" method="post" class="login_area">
         <div class="form-group row mt-4">
           <label class="col-form-label col" for="mail_address">メールアドレス</label>

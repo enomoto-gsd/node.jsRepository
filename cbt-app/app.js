@@ -5,6 +5,7 @@
 const PORT = 3000;
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const {ses_conf} = require("./config/sessionConfig.js")
 const session = require("express-session");
 let flash = require("connect-flash"); 
@@ -12,19 +13,33 @@ const app = express();
 const loginRouter = require("./routes/loginRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js")
 
-//静的ファイルの使用
-app.use(express.static(__dirname+"/public"));
+
 
 //テンプレートエンジンの指定
 app.set("view engine","ejs");
 
-//body-parserの使用
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+
 
 //セッションの使用
 app.use(session(ses_conf));
-app.use(flash())
+//クッキーの使用(flashメッセージ使用のために必要)
+app.use(cookieParser());
+app.use(flash());
+
+// フラッシュメッセージをviewから参照できるようにするためのミドルウェア関数
+app.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  next();
+});
+
+//静的ファイルの使用
+app.use(express.static(__dirname+"/public"));
+
+//body-parserの使用
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(cookieParser('keyboard cat'));
 
 //ルーティング
 app.use(loginRouter);
