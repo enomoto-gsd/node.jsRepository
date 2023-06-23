@@ -18,19 +18,12 @@ const logoutRouter = require("./routes/logoutRouter.js")
 //テンプレートエンジンの指定
 app.set("view engine","ejs");
 
-
-
 //セッションの使用
 app.use(session(ses_conf));
+
 //クッキーの使用(flashメッセージ使用のために必要)
 app.use(cookieParser());
 app.use(flash());
-
-// フラッシュメッセージをviewから参照できるようにするためのミドルウェア関数
-app.use((req, res, next) => {
-  res.locals.flashMessages = req.flash();
-  next();
-});
 
 //静的ファイルの使用
 app.use(express.static(__dirname+"/public"));

@@ -14,11 +14,14 @@
   <div class="container">
     <h1 class="login_title">ログイン</h1>
     <div class="form_area mt-5">
-     <% if(locals.message){ %>
-       <div class="alert alert-danger" role="alert">
-          <%= message.noUserInfo[0] %>
+      
+      <!-- flashメッセージ表示領域-->
+      <% if(flashMessages.error){ %>
+        <div class="alert alert-danger " role="alert">
+          <%= flashMessages.error %>
        </div>
-     <%}%>
+      <% } %>
+
       <form action="/login" method="post" class="login_area">
         <div class="form-group row mt-4">
           <label class="col-form-label col" for="mail_address">メールアドレス</label>
@@ -33,15 +36,17 @@
             <input id="password" class="form-control" type="password" name="password">
           </div>
         </div>
-
-        <div class="mt-5">
-          <input type="submit" class="btn btn-primary " value="ログイン">
-        </div>
+        
         <div class="signup_link">
           <a href="./signup_mock.html">アカウントをお持ちでない方はこちら</a>
         </div>
+        
+        <div class="mt-5">
+          <input type="submit" class="btn btn-primary " value="ログイン">
+        </div>
       </form>
     </div>
+    
   </div>
   <!--jqueryの読み込み -->
   <script src="./javascript/jquery.min.js"></script>
