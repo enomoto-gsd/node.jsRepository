@@ -3,11 +3,10 @@
  */
 const router = require("express").Router();
 
-//ログアウトの処理
 router.post("/logout", (req, res) => {
   if(req.session.login !== null){
     delete req.session.user;
-    res.render("./login.ejs");
+    res.redirect("./login");
   }
 });
 

@@ -5,20 +5,14 @@
 const router = require("express").Router();
 const MongoClient = require("mongodb").MongoClient;
 const { URL, DATABASE, OPTIONS } = require("../config/dbConfig");
+const checkValidation = require("../public/javascript/checkValidation")
 
-let validteCheckMethod = (body)=>{
-  let validatedMessage =  "";
-  if(body.mail_address === null || body.password === null){
-
-    return "メールアドレス、またはパスワードを入力してください";
-  }
-}
 
 //フラッシュメッセージを使用するためのミドルウェア
- router.use((req, res, next) => {
-   res.locals.flashMessages = req.flash();
-   next();
- });
+router.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  next();
+});
 
 router.get("/login", (req, res) => {
   res.render("./login.ejs");
@@ -42,20 +36,31 @@ router.post("/login", (req, res) => {
         client.close();
         return;
       }
-      //バリデーション処理
-      let validate = validteCheckMethod(req.body);
 
+      //バリデーション処理。メッセージが返った場合、ログイン画面にリダイレクトし、フラッシュメッセージを表示
+      let validate = checkValidation.checkValidationMethod(req.body);
+      if (validate !== null) {
+        res.locals.flashMessages = req.flash();
+        req.flash('error', validate);
+        res.redirect('/login');
+        return;
+      }
+
+      //ユーザー情報取得確認の処理
       if (userData !== null && password === userData.password) {
         req.session.login = userData.user_name;
-        res.render("./column_list.ejs",{loginUser: req.session.login});
-      } else {
-        res.locals.flashMessages = req.flash();
-        req.flash('error','ユーザーIDまたはパスワードが不正です。');
-        res.redirect('/login');
+        res.render("./column_list.ejs", { loginUser: req.session.login });
+        return;
       }
+      res.locals.flashMessages = req.flash();
+      req.flash('error', 'ユーザーIDまたはパスワードが不正です。');
+      res.redirect("/login");
       client.close();
-    })
-  })
+    });
+  });
 });
+
+
+
 
 module.exports = router;
