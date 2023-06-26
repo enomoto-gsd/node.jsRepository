@@ -15,8 +15,12 @@ router.use((req, res, next) => {
 });
 
 router.get("/login", (req, res) => {
+  if(req.cookies.mail_address === null ){
+    let cookieMailAddress = req.cookies.mail_address;
+    res.render("./login.ejs",{"mail_address":cookieMailAddress});
+    return;
+  }
   res.render("./login.ejs");
-  //res.render("./login_alter.ejs",{title:"ログイン"});
 });
 
 router.post("/login", (req, res) => {
@@ -52,6 +56,7 @@ router.post("/login", (req, res) => {
         res.render("./column_list.ejs", { loginUser: req.session.login });
         return;
       }
+      res.cookie('mail_address',mail_address);
       res.locals.flashMessages = req.flash();
       req.flash('error', 'ユーザーIDまたはパスワードが不正です。');
       res.redirect("/login");

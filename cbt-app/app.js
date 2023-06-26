@@ -7,7 +7,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const {ses_conf} = require("./config/sessionConfig.js")
 const session = require("express-session");
-let flash = require("connect-flash"); 
+const flash = require("connect-flash"); 
+const cookieParaser = require("cookie-parser");
 const app = express();
 const loginRouter = require("./routes/loginRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js")
@@ -20,6 +21,8 @@ app.set("view engine","ejs");
 app.use(session(ses_conf));
 
 //クッキーの使用(flashメッセージ使用のために必要)
+app.use(cookieParaser());
+
 app.use(flash());
 
 //静的ファイルの使用
