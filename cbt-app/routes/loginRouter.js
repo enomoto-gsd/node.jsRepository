@@ -15,12 +15,9 @@ router.use((req, res, next) => {
 });
 
 router.get("/login", (req, res) => {
-  if(req.cookies.mail_address === null ){
     let cookieMailAddress = req.cookies.mail_address;
     res.render("./login.ejs",{"mail_address":cookieMailAddress});
     return;
-  }
-  res.render("./login.ejs");
 });
 
 router.post("/login", (req, res) => {
@@ -44,6 +41,8 @@ router.post("/login", (req, res) => {
       //バリデーション処理。メッセージが返った場合、ログイン画面にリダイレクトし、フラッシュメッセージを表示
       let validate = checkValidation.checkValidationMethod(req.body);
       if (validate !== null) {
+         //cookieにメールアドレスを格納する。有効期限は10秒間
+        res.cookie('mail_address',mail_address,{maxAge:1000});
         res.locals.flashMessages = req.flash();
         req.flash('error', validate);
         res.redirect('/login');
@@ -56,7 +55,8 @@ router.post("/login", (req, res) => {
         res.render("./column_list.ejs", { loginUser: req.session.login });
         return;
       }
-      res.cookie('mail_address',mail_address);
+      //cookieにメールアドレスを格納する。有効期限は10秒間
+      res.cookie('mail_address',mail_address,{maxAge:1000});
       res.locals.flashMessages = req.flash();
       req.flash('error', 'ユーザーIDまたはパスワードが不正です。');
       res.redirect("/login");
@@ -64,7 +64,6 @@ router.post("/login", (req, res) => {
     });
   });
 });
-
 
 
 

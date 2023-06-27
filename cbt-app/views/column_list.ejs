@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <%- include("shareParts/loadbootstrap.ejs") %>
+  <link rel="stylesheet" href="./css/column_list.css">
   <title>コラム一覧画面</title>
+  
 </head>
 <body>
-  <h1>コラム一覧画面</h1>
-  <h2><%= loginUser %>がログイン中</h2>
-  <p>モック画面です。</p>
-  <form action = "/logout" method = "post">
-    <p><input type = "submit" value = "ログアウト"></p>
-  </form>
+  <%- include("shareParts/header.ejs") %>
+  <h2 class = "title">コラム一覧</h2>
+  <%- include("shareParts/loadScript.ejs") %>
 </body>
 </html>

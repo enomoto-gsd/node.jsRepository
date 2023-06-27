@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <!--boot strapの読み込み -->
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <%- include("shareParts/loadbootstrap.ejs") %>
   <!--　ログイン画面のCSS-->
   <link rel="stylesheet" href="./css/login.css">
   <title>ログイン</title>
@@ -14,7 +14,6 @@
   <div class="container">
     <h1 class="login_title">ログイン</h1>
     <div class="form_area mt-5">
-      
       <!-- flashメッセージ表示領域-->
       <% if(flashMessages.error){ %>
         <div class="alert alert-danger " role="alert">
@@ -27,7 +26,7 @@
         <div class="form-group row mt-4">
           <label class="col-form-label col" for="mail_address">メールアドレス</label>
           <div class="col">
-            <input id="mail_address" class="form-control " type="text" name="mail_address" value = "<%= mail_address %>">
+            <input id="mail_address" class="form-control " type="text" name="mail_address" <% if(mail_address) {%> value = "<%= mail_address %>" <% } %>>
           </div>
         </div>
 
@@ -47,13 +46,8 @@
         </div>
       </form>
     </div>
-    
   </div>
-  <!--jqueryの読み込み -->
-  <script src="./javascript/jquery.min.js"></script>
-  <!--bootstrap jsの読み込み -->
-  <script src="./javascript/bootstrap.min.js"></script>
-
+  <%- include("shareParts/loadScript.ejs") %>
 </body>
 
 </html>
