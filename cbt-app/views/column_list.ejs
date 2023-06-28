@@ -4,12 +4,36 @@
   <meta charset="UTF-8">
   <%- include("shareParts/loadbootstrap.ejs") %>
   <link rel="stylesheet" href="./css/column_list.css">
+  <link rel="stylesheet" href="./css/style.css">
   <title>コラム一覧画面</title>
-  
 </head>
 <body>
   <%- include("shareParts/header.ejs") %>
   <h2 class = "title">コラム一覧</h2>
+  <form action = "/column_regist" method="get">
+    <div class = "text-end">
+      <input type = "submit" value = "コラム登録" class = "btn btn-primary">
+    </div>
+  </form>
+  
+  <table class = "table table-info table-striped mt-3 column-table">
+    <tr>
+      <th>日時</th><th>出来事</th><th>自動思考</th><th>感情</th><th>考えの根拠</th><th>考えの反証</th><th>適応的思考</th><th>ネクストアクション</th>
+    </tr>
+    
+    <% for(let columns of results) {%>
+      <tr>
+        <td class="article_omit"><%= columns.register_date %></td>
+        <td class="article_omit"><a href = "#"><%= columns.event %></a></td>
+        <td class="article_omit"><%= columns.automa_thoughts %></td>
+        <td class="article_omit"><%= columns.emotion %></td>
+        <td class="article_omit"><%= columns.thoughts_proof %></td>
+        <td class="article_omit"><%= columns.thoughts_disproof %></td>
+        <td class="article_omit"><%= columns.adapt_thinks %></td>
+        <td class="article_omit"><%= columns.next_action %></td>
+      </tr>
+    <% } %>
+  </table>
   <%- include("shareParts/loadScript.ejs") %>
 </body>
 </html>

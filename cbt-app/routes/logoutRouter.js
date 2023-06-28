@@ -4,8 +4,10 @@
 const router = require("express").Router();
 
 router.post("/logout", (req, res) => {
-  if(req.session.login !== null){
-    delete req.session.user;
+  if(req.session.userName !== null && req.session.userId !== null){
+    //セッションを削除
+    delete req.session.userName;
+    delete req.session.userId;
     res.redirect("./login");
   }
 });

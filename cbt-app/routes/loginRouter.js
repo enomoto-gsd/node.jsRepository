@@ -51,14 +51,16 @@ router.post("/login", (req, res) => {
 
       //ユーザー情報取得確認の処理
       if (userData !== null && password === userData.password) {
-        req.session.login = userData.user_name;
-        res.render("./column_list.ejs", { loginUser: req.session.login });
+        //セッションにユーザー名、メールアドレスを格納
+        req.session.userName = userData.user_name;
+        req.session.userId = userData.mail_address;
+        res.redirect("/column_list");
         return;
       }
       //cookieにメールアドレスを格納する。有効期限は10秒間
       res.cookie('mail_address',mail_address,{maxAge:1000});
       res.locals.flashMessages = req.flash();
-      req.flash('error', 'ユーザーIDまたはパスワードが不正です。');
+      req.flash('error', 'メールアドレスまたはパスワードが不正です。');
       res.redirect("/login");
       client.close();
     });

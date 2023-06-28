@@ -1,9 +1,6 @@
 /*ログイン画面のCSS*/
 
-body{
-  width:1280px;
-  margin: 0 auto;
-}
+
 /**タイトル部分のCSS*/
 .login_title{
   text-align: center;

@@ -1,3 +1,14 @@
 .title{
   text-align: center;
 }
+
+/* .article_omit { 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+   */
+/* .column-table{
+  table-layout: fixed;
+  width: 100%;
+} */
