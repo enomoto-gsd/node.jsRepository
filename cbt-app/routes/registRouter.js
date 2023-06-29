@@ -18,7 +18,7 @@ router.get("/column_regist",(req,res)=>{
   }
 
 
-  res.render("./column_register.ejs")
+  res.render("./column_register.ejs", {userName: userName} )
 })
 
 module.exports = router;

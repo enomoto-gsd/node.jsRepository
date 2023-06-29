@@ -1,18 +1,5 @@
 /*ログイン画面のCSS*/
 
-
-/**タイトル部分のCSS*/
-.login_title{
-  text-align: center;
-}
-
-/*formエリア部分のCSS*/
-.form_area{
-  margin: 0 auto;
-  text-align: center;
-}
-
-
 /**ユーザー登録画面リンクの位置指定CSS*/
 .signup_link{
   margin: 20px 0 0 0;

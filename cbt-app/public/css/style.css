@@ -1,4 +1,15 @@
+/**共通のCSS処理*/
+
 body{
   width:1280px;
   margin: 0 auto;
+}
+
+.title{
+  text-align: center;
+}
+
+.form_area{
+  margin: 0 auto;
+  text-align: center;
 }
