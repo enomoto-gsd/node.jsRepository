@@ -1,12 +1,12 @@
 
 
-/* .article_omit { 
+.article_omit { 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-   */
-/* .column-table{
+
+.column-table{
   table-layout: fixed;
   width: 100%;
-} */
+} 

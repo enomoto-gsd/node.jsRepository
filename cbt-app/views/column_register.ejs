@@ -3,17 +3,17 @@
 
 <head>
   <meta charset="UTF-8">
+   <%- include("shareParts/loadbootstrap.ejs") %>
   <link rel="stylesheet" href="./css/style.css">
-  <%- include("shareParts/loadbootstrap.ejs") %>
   <title>コラム登録画面</title>
 </head>
-
 <body>
   <%- include("shareParts/header.ejs") %>
   <h2 class="title">コラム登録</h2>
   
   <div class="form_area mt-5">
     <form action="/column_list" method="post">
+      <!-- 登録日時-->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="register_date">登録日時</label>
         <div class="col">
@@ -21,6 +21,7 @@
         </div>
       </div>
 
+      <!-- 出来事 -->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="event">出来事</label>
         <div class="col">
@@ -28,6 +29,7 @@
         </div>
       </div>
 
+      <!-- 自動思考 -->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="automa_thoughts">自動思考</label>
         <div class="col">
@@ -35,6 +37,7 @@
         </div>
       </div>
 
+      <!-- 感情 -->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="emotion">感情</label>
         <div class="col">
@@ -42,6 +45,7 @@
         </div>
       </div>
 
+      <!-- 考えの根拠 -->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="thoughts_proof">考えの根拠</label>
         <div class="col">
@@ -49,27 +53,30 @@
         </div>
       </div>
 
+      <!-- 考えの反証 -->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="thoughts_disproof">考えの反証</label>
         <div class="col">
           <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof"></textarea>
         </div>
       </div>
-
+      <!--　ネクストアクション  -->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="thoughts_disproof">ネクストアクション</label>
         <div class="col">
           <textarea id="next_action" class="form-control" name="thoughts_disproof"></textarea>
         </div>
       </div>
-
       
-        <div class="mt-5">
-          <input type="submit" class="btn btn-primary " value="登録">
-        </div>
-        <form action="/column_list" method="get">
-          <input type="submit" class="btn btn-primary " value="戻る">
-        </form>
+      <!-- 登録ボタンエリア-->
+      <div class="mt-5">
+        <input type="submit" class="btn btn-primary " value="登録">
+      </div>
+    </form>
+
+    <!--　戻るボタンエリア -->
+    <form action="/column_list" method="get">
+      <input type="submit" class="btn btn-primary" id = "return" value="戻る">
     </form>
   </div>
   <%- include("shareParts/loadScript.ejs") %>
