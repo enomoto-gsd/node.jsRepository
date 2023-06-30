@@ -27,6 +27,11 @@ router.post("/login", (req, res) => {
 
   //DB接続、ユーザー情報取得処理
   MongoClient.connect(URL, OPTIONS, (err, client) => {
+    if(err){
+      res.redirect("/login");
+      client.close();
+      return;
+    }
     let db = client.db(DATABASE);
     db.collection("users").findOne({
       mail_address: mail_address

@@ -21,6 +21,7 @@ router.get("/column_list", (req, res) => {
   //ユーザーIDに紐づいたコラム一覧を取得
   MongoClient.connect(URL, OPTIONS, (err, client) => {
     if (err) {
+       //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
       res.redirect("/login");
       client.close();
       return;
@@ -30,13 +31,20 @@ router.get("/column_list", (req, res) => {
       user_id: userId
     }, { sort: { register_date: -1, _id: -1 } }
     ).toArray((error, results) => {
+      if (err) {
+        //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+        res.redirect("/login");
+        client.close();
+        return;
+      }
+
       for (let item of results) {
         //yyyy-mm-dd形式に変換する
         let date = item.register_date.toISOString().split('T')[0];
         item.register_date = date;
       }
       client.close();
-      res.render("column_list.ejs", { userName: userName, results: results });
+      res.render("column_list.ejs", { userName : userName, results: results});
     });
   });
 
