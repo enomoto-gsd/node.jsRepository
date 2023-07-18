@@ -1,12 +1,11 @@
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <p><a href="/column_list">認知行動療法ログ登録システム</a></p>
-    <div class="justify-content-end d-inline-flex mt-5">
-      <p class = "me-5"><%= userName %>がログイン中</p>
-      <form action="/logout" method="post">
-        <p><input type="submit" value="ログアウト" class="btn btn-outline-success"></p>
-      </form>
-    </div>
-  </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light header_area ">
+  <div class = "header_title_area">
+    <a href="/column_list" class = "text-decoration-none link-dark title_link">認知行動療法ログ登録システム</a>
+  </div> 
+  <div class = "login_info_area">
+    <p class = "me-5"><%= userName %>がログイン中</p>
+     <form action="/logout" method="post">
+       <input type="submit" value="ログアウト" class="btn btn-outline-success">
+     </form>
+   </div>
 </nav>
