@@ -1,3 +1,8 @@
+/*
+*ヘッダーに適用するCSS
+* @author kazuki Enomoto
+*/
+
 .header_area{
   /**親要素bodyよりも幅を拡張する*/
   margin: 0 calc(50% - 50vw);

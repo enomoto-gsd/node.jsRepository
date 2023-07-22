@@ -1,4 +1,6 @@
-
+/**コラム一覧画面に適用するCSS
+* @author Kazuki Enomoto
+*/
 
 .article_omit { 
   overflow: hidden;

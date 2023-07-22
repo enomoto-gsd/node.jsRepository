@@ -1,5 +1,5 @@
 /**
- * ログインのルーティング処理を記述
+ * コラム登録画面のルーティング処理を記述
  * @author Enomoto Kazuki
  */
 const router = require("express").Router();
@@ -34,7 +34,7 @@ router.post("/column_regist",(req,res)=>{
   let register_date = req.body.register_date;
   let ISOregister_date = new Date(register_date);
   
-  //DB接続を行い、column_listドキュメントに新規登録処理を行う
+  //DB接続を行い、column_listドキュメントに登録処理を行う
   MongoClient.connect(URL,OPTIONS,(err,client)=>{
     if (err) {
       res.redirect("/login");

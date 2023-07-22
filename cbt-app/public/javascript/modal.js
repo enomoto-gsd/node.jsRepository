@@ -3,8 +3,8 @@ let flag;
 column_form.addEventListener("submit", (e)=>{
   e.preventDefault();
   let options = {backdrop:false,keyboard:false,focus:false};
+  
   //optionsを引数に渡し、モーダルウィンドウのオブジェクトを生成
-
   let myModal = new bootstrap.Modal(document.getElementById("staticBackdrop"),options);
   
   let registerOk = document.getElementById("registerOk");
@@ -13,6 +13,7 @@ column_form.addEventListener("submit", (e)=>{
   myModal.show();
   
   registerOk.addEventListener("click",(e)=>{
+    //checkColumnvalidationメソッドを呼び出し、必須事項の入力チェックを行い、真偽値が返される。
     let validationResult = checkColumnValidation(flag);
     if(validationResult === false){
       //バリデーションの結果がfalseの場合,モーダルウィンドウを隠す
