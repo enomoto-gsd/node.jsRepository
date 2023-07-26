@@ -1,13 +1,16 @@
-/**コラム一覧画面に適用するCSS
+/**
+*コラム一覧画面に適用するCSS
 * @author Kazuki Enomoto
 */
 
+/**コラム一覧のテーブル内の文字列が長い時に省略するCSS*/
 .article_omit { 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/**テーブルの各列の幅を固定して表示をするCSS*/
 .column-table{
-  table-layout: fixed;
+  table-layout: fixed; 
 } 

@@ -1,4 +1,5 @@
-/**DBの接続先情報
+/**
+ * DBの接続先情報の記述
  * @author Kazuki Enomoto
  */
 

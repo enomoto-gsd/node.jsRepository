@@ -1,4 +1,9 @@
 
+/**
+ * モーダルウィンドウで登録ボタンが押下された際に、必須項目のバリデーションチェックを行うJS  
+ * @author kazuki Enomoto 
+ */
+
 let checkColumnValidation = (flag) => {
   let register_dateForm = document.getElementById("register_date");
   let eventForm = document.getElementById("event");

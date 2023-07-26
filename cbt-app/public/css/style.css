@@ -1,19 +1,25 @@
-/**共通のCSS処理*/
+/**共通に適用するCSS
+* @author Kazuki Enomoto
+*/
 
+/**bodyの幅と位置指定を設定するCSS*/
 body{
   width:1280px;
   margin: 0 auto;
 }
 
+/**各ページのタイトルの位置指定を設定するCSS*/
 .title{
   text-align: center;
 }
 
+/**ログイン画面のフォームの位置指定を設定するCSS*/
 .form_area{
   margin: 0 auto;
   text-align: center;
 }
 
+/**必須項目(登録日付,出来事)のバリデーションメッセージの文字列の色を指定するCSS*/
 .registerError, .eventError{
   color:red;
 }

@@ -1,4 +1,5 @@
-/**ログアウトの処理を実行
+/**
+ * ログアウトの処理を実行
  * @author Kazuki Enomoto
  */
 const router = require("express").Router();
