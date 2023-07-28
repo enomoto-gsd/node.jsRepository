@@ -11,11 +11,13 @@ const session = require("express-session");
 const flash = require("connect-flash"); 
 const cookieParaser = require("cookie-parser");
 const app = express();
+
 //routerのインポート
 const loginRouter = require("./routes/loginRouter.js");
 const logoutRouter = require("./routes/logoutRouter.js");
 const listRouter = require("./routes/listRouter.js");
 const registRouter = require("./routes/registRouter.js");
+const signupRouter = require("./routes/signupRouter.js");
 
 
 
@@ -42,6 +44,7 @@ app.use(bodyParser.json());
 
 //ルーティング
 app.use(loginRouter);
+app.use(signupRouter);
 app.use(logoutRouter);
 app.use(listRouter);
 app.use(registRouter);

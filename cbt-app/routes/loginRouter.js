@@ -5,7 +5,7 @@
 const router = require("express").Router();
 const MongoClient = require("mongodb").MongoClient;
 const { URL, DATABASE, OPTIONS } = require("../config/dbConfig");
-const checkValidation = require("../public/javascript/checkValidation")
+const checkValidation = require("../public/javascript/checkValidation");
 
 
 //フラッシュメッセージを使用するためのミドルウェア
@@ -33,6 +33,7 @@ router.post("/login", (req, res) => {
       return;
     }
     let db = client.db(DATABASE);
+    //入力されたメールアドレスを条件にSELECT処理を行う
     db.collection("users").findOne({
       mail_address: mail_address
     }, (err, userData) => {
