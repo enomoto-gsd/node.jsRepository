@@ -22,14 +22,18 @@ router.post("/signup", (req, res) => {
   let mail_address = req.body.mail_address;
   let password = req.body.password;
 
-  //バリデーション処理。メッセージが返った場合、ログイン画面にリダイレクトし、フラッシュメッセージを表示
+  //バリデーション処理の呼び出しを行う。戻り値を変数vaidateに格納する
   let validate = checkSignupValidation.checkSignupValidationMethod(req.body);
+  
+  //変数validateに値が存在する場合,ユーザー登録画面にリダイレクトする。
   if (validate !== null) {
     //cookieにメールアドレスを格納する。有効期限は10秒間
     res.cookie('signup_mail_address', mail_address, { maxAge: 1000 });
     res.cookie('signup_user_name', user_name, { maxAge: 1000 });
+    
     res.locals.flashMessages = req.flash();
     req.flash('error', validate);
+    
     res.redirect('/signup');
     return;
   }
@@ -38,15 +42,27 @@ router.post("/signup", (req, res) => {
   MongoClient.connect(URL, OPTIONS, (err, client) => {
     if (err) {
       res.redirect("/login");
-      client.close();
-      return;
+      return newFunction(client);
     }
-    let db = client.db(DATABASE);
 
+    let db = client.db(DATABASE);
     //既存ユーザーチェック処理
-    db.collection("users").findOne({ mail_address: mail_address }, (err, userData) => {
-      if (userData === null) {
-        //ユーザーが存在しない場合、新規登録を行う
+    db.collection("users").findOne(
+      { mail_address: mail_address },
+      (err, result) => {
+        if (err) {
+          res.redirect("/login");
+          client.close();
+          return;
+        }
+        if (result !== null) {
+          res.locals.flashMessages = req.flash();
+          req.flash('error', 'そのメールアドレスは既に登録されています。');
+          res.redirect("/signup");
+          client.close();
+          return;
+        }
+        //ユーザーの新規登録処理
         db.collection("users").insert({
           mail_address: mail_address,
           user_name: user_name,
@@ -56,18 +72,11 @@ router.post("/signup", (req, res) => {
           client.close();
           res.redirect("/login");
           return;
-        })
-        return;
-      }
-      //ユーザーが既に存在している場合、フラッシュメッセージを返す
-      req.flash('error', 'そのメールアドレスは既に登録済みです');
-      res.redirect("/signup");
-      client.close();
-    })
-    client.close();
-    res.redirect("/login");
+        });
+      });
   });
-})
 
+});
 
 module.exports = router;
+
