@@ -1,37 +1,78 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <!--CSSの読み込み -->
   <%- include("shareParts/loadCSS.ejs") %>
   <title>コラム一覧画面</title>
 </head>
+
 <body>
   <%- include("shareParts/header.ejs") %>
-  <h2 class = "title">コラム一覧</h2>
-  <form action = "/column_regist" method="get">
-    <div class = "text-end">
-      <input type = "submit" value = "コラム登録" class = "btn btn-primary">
+  <h2 class="title">コラム一覧</h2>
+  <div class="search_area">
+    <form action="/column_list" method="post">
+      <!-- 出来事-->
+      <div class="form-group row mt-4">
+        <label for="event" class="col-form-label col-sm-3">出来事</label>
+        <div class="col-sm-5">
+          <input id="event" class="form-control" type="text" name="event">
+        </div>
+      </div>
+
+      <!--　自動思考 -->
+      <div class="form-group row mt-4">
+        <label for="automa_thoughts" class="col-form-label col-sm-3">自動思考</label>
+        <div class="col-sm-5">
+          <input id="automa_thoughts" class="form-control" type="text" name="automa_thoughts">
+        </div>
+      </div>
+
+      <!--　感情 -->
+      <div class="form-group row mt-4">
+        <label for="emotion" class="col-form-label col-sm-3">感情</label>
+        <div class="col-sm-5">
+          <input id="emotion" class="form-control" type="text" name="emotion">
+        </div>
+      </div>
+      <div class="mt-2 text-end">
+        <input type="submit" class="btn btn-primary " value="検索">
+      </div>
+    </form>
+  </div>
+
+  <form action="/column_regist" method="get">
+    <div class="text-end">
+      <input type="submit" value="コラム登録" class="btn btn-primary mt-1">
     </div>
   </form>
-  
-  <table class = "table table-info table-striped mt-3 column-table  ">
+
+  <table class="table table-info table-striped mt-3 column-table  ">
     <tr>
-      <th>日時</th><th>出来事</th><th>自動思考</th><th>感情</th><th>考えの根拠</th><th>考えの反証</th><th>適応的思考</th><th>ネクストアクション</th>
+      <th>日時</th>
+      <th>出来事</th>
+      <th>自動思考</th>
+      <th>感情</th>
+      <th>考えの根拠</th>
+      <th>考えの反証</th>
+      <th>適応的思考</th>
+      <th>ネクストアクション</th>
     </tr>
     <% for(let columns of results) {%>
-      <tr>
-        <td class="article_omit"><%= columns.register_date %></td>
-        <td class="article_omit"><a href = "#"><%= columns.event %></a></td>
-        <td class="article_omit"><%= columns.automa_thoughts %></td>
-        <td class="article_omit"><%= columns.emotion %></td>
-        <td class="article_omit"><%= columns.thoughts_proof %></td>
-        <td class="article_omit"><%= columns.thoughts_disproof %></td>
-        <td class="article_omit"><%= columns.adapt_thinks %></td>
-        <td class="article_omit"><%= columns.next_action %></td>
-      </tr>
+    <tr>
+      <td class="article_omit"><%= columns.register_date %></td>
+      <td class="article_omit"><a href="#"><%= columns.event %></a></td>
+      <td class="article_omit"><%= columns.automa_thoughts %></td>
+      <td class="article_omit"><%= columns.emotion %></td>
+      <td class="article_omit"><%= columns.thoughts_proof %></td>
+      <td class="article_omit"><%= columns.thoughts_disproof %></td>
+      <td class="article_omit"><%= columns.adapt_thinks %></td>
+      <td class="article_omit"><%= columns.next_action %></td>
+    </tr>
     <% } %>
   </table>
   <%- include("shareParts/loadScript.ejs") %>
 </body>
+
 </html>
