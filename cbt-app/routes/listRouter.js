@@ -21,7 +21,7 @@ router.get("/column_list", (req, res) => {
   //ユーザーIDに紐づいたコラム一覧を取得
   MongoClient.connect(URL, OPTIONS, (err, client) => {
     if (err) {
-       //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+      //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
       res.redirect("/login");
       client.close();
       return;
@@ -44,10 +44,95 @@ router.get("/column_list", (req, res) => {
         item.register_date = date;
       }
       client.close();
-      res.render("column_list.ejs", { userName : userName, results: results});
+      res.render("column_list.ejs", { userName: userName, results: results });
     });
   });
 
-})
+});
+
+router.post("/column_list", (req, res) => {
+  let userName = req.session['userName'];
+  let userId = req.session['userId'];
+  //セッション情報の確認
+  if (userName === undefined && userId === undefined) {
+    //セッションに情報がない場合,ログインにリダイレクト
+    res.redirect("/login");
+    return;
+  }
+
+  //フォームから受け取った情報を変数に格納
+  let event = req.body.event;
+  let automa_thoughts = req.body.automa_thoughts;
+  let emotion = req.body.emotion;
+  let radio = req.body.search_radio_button;
+
+  if (radio === "AND") {
+    //AND検索時のクエリ
+    let andQuery = { $and: [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }, { user_id: userId }] };
+    MongoClient.connect(URL, OPTIONS, (err, client) => {
+      if (err) {
+        //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+        res.redirect("/login");
+        client.close();
+        return;
+      }
+      let db = client.db(DATABASE);
+      db.collection("column_list").find(
+          andQuery,
+        { sort: { register_date: -1, _id: -1 } }
+      ).toArray((err, results) => {
+        if (err) {
+          //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+          res.redirect("/login");
+          client.close();
+          return;
+        }
+
+        for (let item of results) {
+          //取得した登録日付をyyyy-mm-dd形式に変換する
+          let date = item.register_date.toISOString().split('T')[0];
+          item.register_date = date;
+        }
+        client.close();
+        res.render("column_list.ejs", { userName: userName, results: results });
+      });
+    });
+
+  }else{
+    //OR検索時のクエリを作成
+    //let orQuery = { $or: [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }], $and:[{user_id:userId}]};
+    //let orQuery = { $and: [ { user_id: userId }, { $or : [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }] }] };
+    let orQuery = { $and: [ { user_id: userId }, { $or : [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }] }] };
+    MongoClient.connect(URL, OPTIONS, (err, client) => {
+      if (err) {
+        //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+        res.redirect("/login");
+        client.close();
+        return;
+      }
+      let db = client.db(DATABASE);
+      db.collection("column_list").find(
+          orQuery,
+        { sort: { register_date: -1, _id: -1 } }
+      ).toArray((err, results) => {
+        if (err) {
+          //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+          res.redirect("/login");
+          client.close();
+          return;
+        }
+
+        for (let item of results) {
+          //取得した登録日付をyyyy-mm-dd形式に変換する
+          let date = item.register_date.toISOString().split('T')[0];
+          item.register_date = date;
+        }
+        client.close();
+        res.render("column_list.ejs", { userName: userName, results: results });
+      });
+  });
+}});
+
+
 
 module.exports = router;

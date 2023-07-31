@@ -11,6 +11,8 @@
 <body>
   <%- include("shareParts/header.ejs") %>
   <h2 class="title">コラム一覧</h2>
+
+  <!-- ログ一覧検索 -->
   <div class="search_area">
     <form action="/column_list" method="post">
       <!-- 出来事-->
@@ -36,11 +38,20 @@
           <input id="emotion" class="form-control" type="text" name="emotion">
         </div>
       </div>
+
+      <div class="" style="width: 300px; border: black 1px solid; text-align: right;">
+        <input id="and_search" type="radio" value = "AND" name="search_radio_button" checked>
+        <label for="and_search">すべて含む</label>
+        <input id="or_search" type="radio" value = "OR" name="search_radio_button">
+        <label for="or_search">いずれかを含む</label>
+      </div>
+
       <div class="mt-2 text-end">
         <input type="submit" class="btn btn-primary " value="検索">
       </div>
     </form>
   </div>
+  <!-- ログ一覧検索 終了 -->
 
   <form action="/column_regist" method="get">
     <div class="text-end">
@@ -69,6 +80,7 @@
       <td class="article_omit"><%= columns.thoughts_disproof %></td>
       <td class="article_omit"><%= columns.adapt_thinks %></td>
       <td class="article_omit"><%= columns.next_action %></td>
+      <td class="article_omit"><%= columns.user_id %></td>
     </tr>
     <% } %>
   </table>
