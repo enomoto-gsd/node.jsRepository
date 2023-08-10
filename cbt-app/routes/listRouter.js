@@ -61,11 +61,15 @@ router.post("/column_list", (req, res) => {
   }
 
   //フォームから受け取った情報を変数に格納
-  let event = req.body.event;
-  let automa_thoughts = req.body.automa_thoughts;
-  let emotion = req.body.emotion;
+  let event = req.body.event || "";
+  let automa_thoughts = req.body.automa_thoughts || "";
+  let emotion = req.body.emotion || "";
   let radio = req.body.search_radio_button;
 
+  let eventRegex  = new RegExp(`.*${event}.*`);
+  let automaRegex  = new RegExp(`.*${automa_thoughts}.*`);
+  let emotionRegex  = new RegExp(`.*${emotion}.*`);
+  
   if (radio === "AND") {
     //AND検索時のクエリ
     let andQuery = { $and: [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }, { user_id: userId }] };
@@ -78,7 +82,7 @@ router.post("/column_list", (req, res) => {
       }
       let db = client.db(DATABASE);
       db.collection("column_list").find(
-          andQuery,
+        andQuery,
         { sort: { register_date: -1, _id: -1 } }
       ).toArray((err, results) => {
         if (err) {
@@ -98,13 +102,30 @@ router.post("/column_list", (req, res) => {
       });
     });
 
-  }else{
+  } else {
     //OR検索時のクエリを作成
-    //let orQuery = { $or: [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }], $and:[{user_id:userId}]};
-    //let orQuery = { $and: [ { user_id: userId }, { $or : [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }] }] };
-    let orQuery = { $and: [ { user_id: userId }, { $or : [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }] }] };
+    //let orQuery = { $and: [ { user_id: userId }, { $or : [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }] }] }; 
+    //let orQuery = { $and: [{ user_id: userId }, { $or: [{ event: new RegExp(event, 'xi') }, { automa_thoughts: new RegExp(automa_thoughts, 'xi') },{ emotion: new RegExp(emotion, 'xi') }] },{}] };
+    let orQuery = { $and :
+       [{ user_id : userId }, 
+      { $or: [
+        { event : eventRegex },
+        { automa_thoughts : automaRegex},
+        { emotion : emotionRegex}
+      ]} 
+    ]};
+
+    // let orQuery = { $and :
+    //     [{ user_id : userId },
+    //       {event:{ $in:event}}, 
+    //       {automa_thoughts:{ $in:automa_thoughts}}, 
+    //       {emotion:{ $in:emotion}}] 
+    //   };
+
+    
     MongoClient.connect(URL, OPTIONS, (err, client) => {
       if (err) {
+        throw err;
         //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
         res.redirect("/login");
         client.close();
@@ -112,10 +133,11 @@ router.post("/column_list", (req, res) => {
       }
       let db = client.db(DATABASE);
       db.collection("column_list").find(
-          orQuery,
+        orQuery,
         { sort: { register_date: -1, _id: -1 } }
       ).toArray((err, results) => {
         if (err) {
+          throw err;
           //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
           res.redirect("/login");
           client.close();
@@ -130,8 +152,9 @@ router.post("/column_list", (req, res) => {
         client.close();
         res.render("column_list.ejs", { userName: userName, results: results });
       });
-  });
-}});
+    });
+  }
+});
 
 
 
