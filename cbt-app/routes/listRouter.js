@@ -61,14 +61,10 @@ router.post("/column_list", (req, res) => {
   }
 
   //フォームから受け取った情報を変数に格納
-  let event = req.body.event || "";
-  let automa_thoughts = req.body.automa_thoughts || "";
-  let emotion = req.body.emotion || "";
+  let event = req.body.event;
+  let automa_thoughts = req.body.automa_thoughts;
+  let emotion = req.body.emotion;
   let radio = req.body.search_radio_button;
-
-  let eventRegex  = new RegExp(`.*${event}.*`);
-  let automaRegex  = new RegExp(`.*${automa_thoughts}.*`);
-  let emotionRegex  = new RegExp(`.*${emotion}.*`);
   
   if (radio === "AND") {
     //AND検索時のクエリ
@@ -103,24 +99,44 @@ router.post("/column_list", (req, res) => {
     });
 
   } else {
-    //OR検索時のクエリを作成
-    //let orQuery = { $and: [ { user_id: userId }, { $or : [{ event: new RegExp(event, 'i') }, { automa_thoughts: new RegExp(automa_thoughts, 'i') }, { emotion: new RegExp(emotion, 'i') }] }] }; 
-    //let orQuery = { $and: [{ user_id: userId }, { $or: [{ event: new RegExp(event, 'xi') }, { automa_thoughts: new RegExp(automa_thoughts, 'xi') },{ emotion: new RegExp(emotion, 'xi') }] },{}] };
-    let orQuery = { $and :
-       [{ user_id : userId }, 
-      { $or: [
-        { event : eventRegex },
-        { automa_thoughts : automaRegex},
-        { emotion : emotionRegex}
-      ]} 
-    ]};
+    
+    let query = {};
 
-    // let orQuery = { $and :
-    //     [{ user_id : userId },
-    //       {event:{ $in:event}}, 
-    //       {automa_thoughts:{ $in:automa_thoughts}}, 
-    //       {emotion:{ $in:emotion}}] 
-    //   };
+    let existAutoma_thoughts = () => {
+      if(automa_thoughts){
+        if (!query.$and) {
+          query.$and = [];
+        }
+        query.$and.push({ automa_thoughts: new RegExp(automa_thoughts, 'i') });
+      }
+    }
+
+    let existEmotion = () =>{
+      if (automa_thoughts) {
+        if (!query.$and) {
+          query.$and = [];
+        }
+        query.$and.push({ automa_thoughts: new RegExp(automa_thoughts, 'i') });
+      }
+    }
+
+    if (userId) {
+      if(!query.$and){
+        query.$and =[];
+      }
+       query.$and.push({user_id:userId})
+    }
+
+    if (event) {
+      if (!query.$and){ 
+        query.$and = [];
+      }
+      query.$and.push({ $or: [{ event: new RegExp(event, 'i') },existAutoma_thoughts, existEmotion ]});
+    }
+    
+
+// 完成したクエリを使ってデータを検索する（例としてconsole.logで表示）
+console.log(query);
 
     
     MongoClient.connect(URL, OPTIONS, (err, client) => {
@@ -133,7 +149,7 @@ router.post("/column_list", (req, res) => {
       }
       let db = client.db(DATABASE);
       db.collection("column_list").find(
-        orQuery,
+        query,
         { sort: { register_date: -1, _id: -1 } }
       ).toArray((err, results) => {
         if (err) {
