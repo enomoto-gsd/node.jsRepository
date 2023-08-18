@@ -18,7 +18,7 @@ const logoutRouter = require("./routes/logoutRouter.js");
 const listRouter = require("./routes/listRouter.js");
 const registRouter = require("./routes/registRouter.js");
 const signupRouter = require("./routes/signupRouter.js");
-
+const detailRouter = require("./routes/detailRouter.js");
 
 
 //テンプレートエンジンの指定
@@ -48,6 +48,7 @@ app.use(signupRouter);
 app.use(logoutRouter);
 app.use(listRouter);
 app.use(registRouter);
+app.use(detailRouter);
 
 //listen開始
 app.listen(PORT,()=>{

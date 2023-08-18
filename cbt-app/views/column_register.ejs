@@ -14,14 +14,14 @@
   
   <!-- Modalの埋め込み -->
   <%- include("shareParts/modal.ejs") %>
-  
+
   <div class="form_area mt-5">
     <form action="/column_regist" method="post" id = "column_form">
       <!-- 登録日時-->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="register_date">登録日付</label>
         <div class="col">
-          <input id="register_date" class="form-control " type="datetime-local" name="register_date">
+          <input id="register_date" class="form-control " type="datetime-local" name="register_date"  value = "<%= registerForm.register_date %>" >
           <spam id = "registerError" class = "registerError"></spam>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="event">出来事</label>
         <div class="col">
-          <input id="event" class="form-control " type="text" name="event">
+          <input id="event" class="form-control " type="text" name="event" value = "<%= registerForm.event %>">
           <spam id = "eventError" class ="eventError"></spam>
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="automa_thoughts">自動思考</label>
         <div class="col">
-          <textarea id="automa_thoughts" class="form-control" name="automa_thoughts"></textarea>
+          <textarea id="automa_thoughts" class="form-control" name="automa_thoughts"> <%=  registerForm.automa_thoughts %></textarea>
         </div>
       </div>
 
@@ -47,15 +47,15 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="emotion">感情</label>
         <div class="col">
-          <textarea id="emotion" class="form-control" name="emotion"></textarea>
+          <textarea id="emotion" class="form-control" name="emotion" ><%= registerForm.emotion %></textarea>
         </div>
       </div>
 
       <!-- 考えの根拠 -->
       <div class="form-group row mt-4">
-        <label class="col-form-label col" for="thoughts_proof">考えの根拠</label>
+        <label class="col-form-label col" for="thoughts_proof" >考えの根拠</label>
         <div class="col">
-          <textarea id="thoughts_proof" class="form-control" name="thoughts_proof"></textarea>
+          <textarea id="thoughts_proof" class="form-control" name="thoughts_proof"><%= registerForm.thoughts_proof %></textarea>
         </div>
       </div>
 
@@ -63,7 +63,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="thoughts_disproof">考えの反証</label>
         <div class="col">
-          <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof"></textarea>
+          <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof" > <%= registerForm.thoughts_disproof %> </textarea>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="adapt_thinks">適応的思考</label>
         <div class="col">
-          <textarea id="adapt_thinks" class="form-control" name="adapt_thinks"></textarea>
+          <textarea id="adapt_thinks" class="form-control" name="adapt_thinks"  > <%= registerForm.adapt_thinks %> </textarea>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="next_action">ネクストアクション</label>
         <div class="col">
-          <textarea id="next_action" class="form-control" name="next_action"></textarea>
+          <textarea id="next_action" class="form-control" name="next_action"  ><%= registerForm.next_action %></textarea>
         </div>
       </div>
 

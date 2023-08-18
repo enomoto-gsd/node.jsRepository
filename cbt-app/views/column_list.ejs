@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="" style="width: 300px; border: black 1px solid; text-align: right;">
+      <div style="width: 300px;">
         <input id="and_search" type="radio" value = "AND" name="search_radio_button" checked>
         <label for="and_search">すべて含む</label>
         <input id="or_search" type="radio" value = "OR" name="search_radio_button">
@@ -73,14 +73,13 @@
     <% for(let columns of results) {%>
     <tr>
       <td class="article_omit"><%= columns.register_date %></td>
-      <td class="article_omit"><a href="#"><%= columns.event %></a></td>
+      <td class="article_omit"><a href="/detail/<%= columns._id%>"><%= columns.event %></a></td>
       <td class="article_omit"><%= columns.automa_thoughts %></td>
       <td class="article_omit"><%= columns.emotion %></td>
       <td class="article_omit"><%= columns.thoughts_proof %></td>
       <td class="article_omit"><%= columns.thoughts_disproof %></td>
       <td class="article_omit"><%= columns.adapt_thinks %></td>
       <td class="article_omit"><%= columns.next_action %></td>
-      <td class="article_omit"><%= columns.user_id %></td>
     </tr>
     <% } %>
   </table>
