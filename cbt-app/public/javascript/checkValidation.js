@@ -4,6 +4,9 @@
  * @author Kazuki Enomoto
  */
 
+'use strict';
+
+
 let checkValidationMethod = (body)=>{
   const mailPattern = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
   const passwordPattern =/^[a-z\d]{4,10}$/i;

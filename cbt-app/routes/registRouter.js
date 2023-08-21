@@ -17,7 +17,7 @@ router.get("/column_regist", (req, res) => {
     return;
   }
 
-
+  //配列を作成し、空のデータを代入する
   let registerForm = {};
   registerForm.register_date;
   registerForm.event = "";
@@ -28,7 +28,10 @@ router.get("/column_regist", (req, res) => {
   registerForm.adapt_thinks = "";
   registerForm.next_action = "";
 
-  res.render("./column_register.ejs", { userName: userName, registerForm: registerForm })
+  //モードの指定
+  let mode = "register";
+
+  res.render("./column_register.ejs", { userName: userName, registerForm: registerForm, mode : mode })
 });
 
 router.post("/column_regist", (req, res) => {

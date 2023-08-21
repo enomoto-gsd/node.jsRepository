@@ -3,6 +3,9 @@
  *　@author Kazuki Enomoto
  */
 
+ 'use strict';
+
+
 let column_form = document.getElementById("column_form");
 
 //バリデーション判定の引数として宣言

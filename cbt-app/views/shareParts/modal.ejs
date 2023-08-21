@@ -7,7 +7,8 @@
         <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>コラムの登録処理を行います。よろしいですか</p>
+        <!-- <p>コラムの登録処理を行います。よろしいですか</p> -->
+        <p><% if (mode === "readOnly") { %> コラムの更新処理を行います。よろしいですか。<% } else { %> コラムの登録処理を行います。よろしいですか。 <% } %></p>
       </div>
       <div class="modal-footer d-flex justify-content-between">
         <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">キャンセル</button>

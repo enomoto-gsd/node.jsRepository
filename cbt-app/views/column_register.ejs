@@ -10,10 +10,18 @@
 
 <body>
   <%- include("shareParts/header.ejs") %>
-  <h2 class="title">コラム登録</h2>
+  <h2 class="title"><% if (mode === "readOnly") { %> コラム詳細 <% } else {%> コラム登録 <%}%></h2>
   
   <!-- Modalの埋め込み -->
   <%- include("shareParts/modal.ejs") %>
+
+  <!-- 編集モード切り替えボタン-->
+  <% if(mode === "readOnly"){%>
+    <div class="mt-2">
+      <input type = "button" class = "btn btn-success" id = "editButton" value = "編集">
+      <input type = "button" class = "btn btn-danger" id = "deleteButton" value = "削除">
+    </div>
+  <%} %>
 
   <div class="form_area mt-5">
     <form action="/column_regist" method="post" id = "column_form">
@@ -21,7 +29,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="register_date">登録日付</label>
         <div class="col">
-          <input id="register_date" class="form-control " type="datetime-local" name="register_date"  value = "<%= registerForm.register_date %>" >
+          <input id="register_date" class="form-control " type="datetime-local" name="register_date"  value = "<%= registerForm.register_date %>"  <% if( mode === "readOnly") {%> disabled  <% }%> >
           <spam id = "registerError" class = "registerError"></spam>
         </div>
       </div>
@@ -30,7 +38,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="event">出来事</label>
         <div class="col">
-          <input id="event" class="form-control " type="text" name="event" value = "<%= registerForm.event %>">
+          <input id="event" class="form-control " type="text" name="event" value = "<%= registerForm.event %>" <% if( mode === "readOnly") {%> disabled  <% }%> >
           <spam id = "eventError" class ="eventError"></spam>
         </div>
       </div>
@@ -39,7 +47,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="automa_thoughts">自動思考</label>
         <div class="col">
-          <textarea id="automa_thoughts" class="form-control" name="automa_thoughts"> <%=  registerForm.automa_thoughts %></textarea>
+          <textarea id="automa_thoughts" class="form-control" name="automa_thoughts" <% if( mode === "readOnly") {%> disabled  <% }%> > <%=  registerForm.automa_thoughts %></textarea>
         </div>
       </div>
 
@@ -47,7 +55,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="emotion">感情</label>
         <div class="col">
-          <textarea id="emotion" class="form-control" name="emotion" ><%= registerForm.emotion %></textarea>
+          <textarea id="emotion" class="form-control" name="emotion" <% if( mode === "readOnly") {%> disabled  <% }%> ><%= registerForm.emotion %></textarea>
         </div>
       </div>
 
@@ -55,15 +63,15 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="thoughts_proof" >考えの根拠</label>
         <div class="col">
-          <textarea id="thoughts_proof" class="form-control" name="thoughts_proof"><%= registerForm.thoughts_proof %></textarea>
+          <textarea id="thoughts_proof" class="form-control" name="thoughts_proof" <% if( mode === "readOnly") {%> disabled  <% }%>><%= registerForm.thoughts_proof %></textarea>
         </div>
       </div>
 
       <!-- 考えの反証 -->
       <div class="form-group row mt-4">
-        <label class="col-form-label col" for="thoughts_disproof">考えの反証</label>
+        <label class="col-form-label col" for="thoughts_disproof" <% if( mode === "readOnly") {%> disabled  <% }%> >考えの反証</label>
         <div class="col">
-          <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof" > <%= registerForm.thoughts_disproof %> </textarea>
+          <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof" <% if( mode === "readOnly") {%> disabled  <% }%> > <%= registerForm.thoughts_disproof %> </textarea>
         </div>
       </div>
 
@@ -71,7 +79,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="adapt_thinks">適応的思考</label>
         <div class="col">
-          <textarea id="adapt_thinks" class="form-control" name="adapt_thinks"  > <%= registerForm.adapt_thinks %> </textarea>
+          <textarea id="adapt_thinks" class="form-control" name="adapt_thinks"  <% if( mode === "readOnly") {%> disabled  <% }%> > <%= registerForm.adapt_thinks %> </textarea>
         </div>
       </div>
 
@@ -79,14 +87,15 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="next_action">ネクストアクション</label>
         <div class="col">
-          <textarea id="next_action" class="form-control" name="next_action"  ><%= registerForm.next_action %></textarea>
+          <textarea id="next_action" class="form-control" name="next_action"  <% if( mode === "readOnly") {%> disabled  <% }%> ><%= registerForm.next_action %></textarea>
         </div>
       </div>
 
       <!-- 登録ボタンエリア-->
       <div class="mt-5 d-flex justify-content-between">
         <input type="submit" class="btn btn-primary" form = "return" value="戻る">
-        <input type="submit" class="btn btn-primary" value="登録">
+        <!-- <input type="submit" class="btn btn-primary" value= "<% if (mode === "readOnly") { %> 更新 <% } else{%> 登録 <%}%> "> -->
+        <input type="submit" class="btn btn-primary" <% if(mode === "readOnly"){%> hidden value = "更新" <% }%> value = "登録" >
       </div>
     </form>
 
@@ -96,8 +105,9 @@
 
 
   <%- include("shareParts/loadScript.ejs") %>
-  <script src = "./javascript/checkColumnValidation.js"></script>
-  <script src = "./javascript/modal.js"></script>
+  <script src = "/javascript/checkColumnValidation.js"></script>
+  <script src = "/javascript/modal.js"></script>
+  <script src = "/javascript/changeEditMode.js"></script>
 </body>
 
 </html>

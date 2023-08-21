@@ -15,9 +15,9 @@ router.get("/detail/:id",(req,res)=>{
     return;
   }
   
-  let columnId = req.params.id ;
+  //パスパラメーター取得
+  let columnId = req.params.id;
 
-  
   MongoClient.connect(URL, OPTIONS, (err, client) => {
     if (err) {
       res.redirect("/login");
@@ -37,9 +37,14 @@ router.get("/detail/:id",(req,res)=>{
         client.close();
         return;
       }
-    
+
+      //DBから取得した登録日時データをクライアント側のdatetime-localでも表示できるよう加工
+      let parsedDate = result.register_date.toISOString();
+      slicedDate = parsedDate.slice(0,-5);
+      
+      //連想配列を作成、検索結果の格納
       let registerForm = {};
-      registerForm.register_date = result.register_date;
+      registerForm.register_date = slicedDate;
       registerForm.event = result.event;
       registerForm.automa_thoughts = result.automa_thoughts;
       registerForm.emotion = result.emotion ;
@@ -48,8 +53,11 @@ router.get("/detail/:id",(req,res)=>{
       registerForm.adapt_thinks = result.adapt_thinks;
       registerForm.next_action = result.next_action;
 
+      //モードの指定
+      let mode = "readOnly"
+
       client.close();
-      res.render("./column_register.ejs", {userName: userName,registerForm:registerForm} )
+      res.render("./column_register.ejs", {userName: userName,registerForm:registerForm,mode:mode} );
     });
     
   });  

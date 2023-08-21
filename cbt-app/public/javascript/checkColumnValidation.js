@@ -4,6 +4,8 @@
  * @author kazuki Enomoto 
  */
 
+'use strict';
+
 let checkColumnValidation = (flag) => {
   let register_dateForm = document.getElementById("register_date");
   let eventForm = document.getElementById("event");
