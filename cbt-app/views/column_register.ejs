@@ -15,13 +15,13 @@
   <!-- Modalの埋め込み -->
   <%- include("shareParts/modal.ejs") %>
 
-  <!-- 編集モード切り替えボタン-->
+  <!-- 編集ボタン 削除ボタン-->
   <% if(mode === "readOnly"){%>
-    <div class="mt-2">
-      <input type = "button" class = "btn btn-success" id = "editButton" value = "編集">
-      <input type = "button" class = "btn btn-danger" id = "deleteButton" value = "削除">
+    <div class=" d-flex justify-content-end">
+      <button class = "btn btn-success me-5" id = "editButton">編集</button>
+      <button class = "btn btn-danger deleteButton" name = "deleteButton" id = "deleteButton" value = "<%= registerForm._id %>">削除</button>
     </div>
-  <%} %>
+  <% } %>
 
   <div class="form_area mt-5">
     <form action="/column_regist" method="post" id = "column_form">
@@ -55,7 +55,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="emotion">感情</label>
         <div class="col">
-          <textarea id="emotion" class="form-control" name="emotion" <% if( mode === "readOnly") {%> disabled  <% }%> ><%= registerForm.emotion %></textarea>
+          <textarea id="emotion" class="form-control" name="emotion" <% if( mode === "readOnly") {%> disabled  <% }%>><%= registerForm.emotion %></textarea>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="thoughts_disproof" <% if( mode === "readOnly") {%> disabled  <% }%> >考えの反証</label>
         <div class="col">
-          <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof" <% if( mode === "readOnly") {%> disabled  <% }%> > <%= registerForm.thoughts_disproof %> </textarea>
+          <textarea id="thoughts_disproof" class="form-control" name="thoughts_disproof" <% if( mode === "readOnly") {%> disabled  <% }%>><%= registerForm.thoughts_disproof %> </textarea>
         </div>
       </div>
 
@@ -94,8 +94,7 @@
       <!-- 登録ボタンエリア-->
       <div class="mt-5 d-flex justify-content-between">
         <input type="submit" class="btn btn-primary" form = "return" value="戻る">
-        <!-- <input type="submit" class="btn btn-primary" value= "<% if (mode === "readOnly") { %> 更新 <% } else{%> 登録 <%}%> "> -->
-        <input type="submit" class="btn btn-primary" <% if(mode === "readOnly"){%> hidden value = "更新" <% }%> value = "登録" >
+        <input type="submit" id = "updateButton" class="btn btn-primary <% if(mode === "readOnly") { %> updateButton" value = "更新" <% } else { %>   value = "登録"  <% } %> >
       </div>
     </form>
 
@@ -108,6 +107,7 @@
   <script src = "/javascript/checkColumnValidation.js"></script>
   <script src = "/javascript/modal.js"></script>
   <script src = "/javascript/changeEditMode.js"></script>
+  <script src = "/javascript/deleteColumn.js"></script>
 </body>
 
 </html>

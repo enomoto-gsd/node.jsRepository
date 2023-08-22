@@ -3,7 +3,12 @@
 
 let editButton = document.getElementById("editButton");
 
-//詳細画面のフォーム要素を全て
+let displayButton = () => {
+  $("#deleteButton").toggleClass('show');
+  $("#updateButton").toggleClass('show');
+}
+
+//詳細画面の入力項目の非活性を解除する
 let enableFields = () => {
  
   let flag = true;
@@ -15,14 +20,9 @@ let enableFields = () => {
       formItems.disabled = false;
     });
     flag = false;
-    return;
   }
 
-  formNames.forEach((formItems) => {
-    formItems.disabled = false;
-  });
-  flag = false;
-
+  displayButton();
  }
 
 
