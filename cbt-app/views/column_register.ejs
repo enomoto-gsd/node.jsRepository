@@ -19,12 +19,16 @@
   <% if(mode === "readOnly"){%>
     <div class=" d-flex justify-content-end">
       <button class = "btn btn-success me-5" id = "editButton">編集</button>
-      <button class = "btn btn-danger deleteButton" name = "deleteButton" id = "deleteButton" value = "<%= registerForm._id %>">削除</button>
+      <button class = "btn btn-danger deleteButton"  id = "deleteButton" value = "<%= registerForm._id %>">削除</button>
     </div>
   <% } %>
 
   <div class="form_area mt-5">
-    <form action="/column_regist" method="post" id = "column_form">
+    <form <% if(mode === "readOnly") {%> action="/detail" <% }else{ %> action = "/column_regist" <% } %> method="post" id = "column_form">
+      
+      <!-- modeがreadOnlyの状態の時のみ、下記のinputタグを生成-->
+      <% if(mode === "readOnly") {%> <input id = "updateHidden" type = "hidden" value = "<%= registerForm._id %>" name = "column_id" > <% }%>
+
       <!-- 登録日時-->
       <div class="form-group row mt-4">
         <label class="col-form-label col" for="register_date">登録日付</label>
@@ -108,6 +112,7 @@
   <script src = "/javascript/modal.js"></script>
   <script src = "/javascript/changeEditMode.js"></script>
   <script src = "/javascript/deleteColumn.js"></script>
+  <script src = "/javascript/updateColumn.js"></script>
 </body>
 
 </html>

@@ -26,6 +26,8 @@ column_form.addEventListener("submit", (e)=>{
   
   //モーダルウィンドウの表示
   myModal.show();
+
+
   
   //モーダルウィンドウのOKが押下された際の処理
   registerOk.addEventListener("click",(e)=>{
@@ -38,6 +40,7 @@ column_form.addEventListener("submit", (e)=>{
       myModal.hide();
       return;
     }
+    
     //バリデーションの結果がtrueの場合、submitでサーバー側に情報を送信する
     column_form.submit();
   })

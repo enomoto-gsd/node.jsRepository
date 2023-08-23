@@ -4,6 +4,7 @@ const { DATABASE, URL, OPTIONS, } = require("../config/dbConfig");
 const ObjectId = require('mongodb').ObjectID;
 
 
+
 router.get("/detail/:id", (req, res) => {
   //セッション情報の取得
   let userName = req.session['userName'];
@@ -72,9 +73,12 @@ router.post("/detail", (req, res) => {
   let userId = req.session['userId'];
   let mode = req.body.mode;
   let columnId = req.body.columnId;
-  console.log(mode);
-  console.log(columnId);
 
+  //更新処理用のコラムid格納
+  let updateForColumnId = req.body.column_id;
+  console.log(updateForColumnId);
+
+  
   if (userName === undefined && userId === undefined) {
     //セッションに情報がない場合,ログインにリダイレクト
     res.redirect("/login");
@@ -89,6 +93,7 @@ router.post("/detail", (req, res) => {
         client.close();
         return;
       }
+
       let db = client.db(DATABASE);
 
       db.collection("column_list").deleteOne({
@@ -107,8 +112,30 @@ router.post("/detail", (req, res) => {
     })
   }
 
-  if (mode === "update") {
+  if (updateForColumnId) {
+    MongoClient.connect(URL, OPTIONS, (err, client) => {
+      if (err) {
+        res.redirect("/login");
+        client.close();
+        return;
+      }
 
+      let db = client.db(DATABASE);
+
+      db.collection("column_list").deleteOne({
+        "_id": ObjectId(updateForColumnId), user_id: userId
+      }, (err) => {
+        if (err) {
+          //DB接続でエラーがあった場合,、ログイン画面にリダイレクト
+          res.redirect("/login");
+          client.close();
+          return;
+        }
+        client.close();
+        res.redirect("/login");
+        return;
+      })
+    })
   }
 
 });

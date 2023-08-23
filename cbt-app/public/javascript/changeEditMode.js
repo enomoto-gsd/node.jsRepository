@@ -3,6 +3,7 @@
 
 let editButton = document.getElementById("editButton");
 
+//削除ボタンと更新ボタンの表示の切り替え
 let displayButton = () => {
   $("#deleteButton").toggleClass('show');
   $("#updateButton").toggleClass('show');
@@ -10,20 +11,20 @@ let displayButton = () => {
 
 //詳細画面の入力項目の非活性を解除する
 let enableFields = () => {
- 
-  let flag = true;
-  let formNames = document.querySelectorAll("[name]");
-  
-  if (flag === true) {
-    //name属性がついている要素を全て取得する
-    formNames.forEach((formItems) => {
-      formItems.disabled = false;
-    });
-    flag = false;
-  }
+  //要素の取得
+  let formEls = document.querySelectorAll('input[type = "text"],textarea,input[type = "datetime-local"]');
 
+  
+    //取得した要素の非活性を全て解除
+    formEls.forEach((formItem) => {
+      if(formItem.disabled){
+        formItem.disabled = false;
+      }else{
+        formItem.disabled = true;
+      }
+    });
   displayButton();
- }
+}
 
 
 editButton.addEventListener("click", enableFields);
