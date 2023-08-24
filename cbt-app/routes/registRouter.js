@@ -31,7 +31,7 @@ router.get("/column_regist", (req, res) => {
   //モードの指定
   let mode = "register";
 
-  res.render("./column_register.ejs", { userName: userName, registerForm: registerForm, mode : mode })
+  res.render("./column_register.ejs", { userName: userName, registerForm: registerForm, mode: mode })
 });
 
 router.post("/column_regist", (req, res) => {
