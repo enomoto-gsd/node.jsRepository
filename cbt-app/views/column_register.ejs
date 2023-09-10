@@ -19,7 +19,8 @@
     <% if(mode === "readOnly"){%>
     <div class=" d-flex justify-content-end">
       <button class="btn btn-success me-5" id="editButton">編集</button>
-      <button class="btn btn-danger deleteButton" id="deleteButton" value="<%= registerForm._id %>">削除</button>
+      <button class="btn btn-danger deleteButton me-5" id="deleteButton" value="<%= registerForm._id %>">削除</button>
+      <button class="btn btn-info excelOutputBtn" id="excelOutputBtn">エクセル出力</button>
     </div>
     <% } %>
 
